@@ -36,7 +36,7 @@ public class DBUtils {
     }
 
     public static void signUpUser(ActionEvent event, String username, String password){
-
+        
 
     }
 }
