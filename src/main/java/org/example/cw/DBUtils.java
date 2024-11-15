@@ -5,7 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
+import java.sql.*;
 
 import java.io.IOException;
 
@@ -36,7 +39,36 @@ public class DBUtils {
     }
 
     public static void signUpUser(ActionEvent event, String username, String password){
-        
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+        PreparedStatement psCheckUserExists = null;
+        ResultSet resultSet = null;
+
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "onara","onara");
+            psCheckUserExists = connection.prepareStatement("SELECT = FROM users WHERE username = ? ?");
+            psCheckUserExists.setString(1,username);
+            resultSet = psCheckUserExists.executeQuery();
+
+            if(resultSet.isBeforeFirst()){
+                System.out.println("User already exixts!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("You cannot use this username");
+                alert.show();
+            }else{
+              psInsert = connection.prepareStatement("INSERT INTO users (username, password)");
+              psInsert.setString(1,username);
+              psInsert.setString(2,password);
+              psInsert.executeUpdate();
+
+              changeScene(event, "Home.fxml", "Welcome!", username);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
 
     }
 }
