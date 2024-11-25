@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private int userId;
     private String username;
     private String password;
     private List<String> preferences;
     private List<String> readingHistory;
 
     // Constructor
-    public User(String username, String password) {
+    public User(int userId, String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.preferences = new ArrayList<>();
@@ -18,6 +20,9 @@ public class User {
     }
 
     // Getters and Setters
+    public int getUserId() { return userId; }  // Getter for userId
+    public void setUserId(int userId) { this.userId = userId; }  // Setter for userId
+
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
@@ -29,4 +34,8 @@ public class User {
 
     public List<String> getReadingHistory() { return readingHistory; }
     public void addToReadingHistory(String article) { this.readingHistory.add(article); }
+
+    public void addToPreferences(String preference) {
+        this.preferences.add(preference);
+    }
 }
