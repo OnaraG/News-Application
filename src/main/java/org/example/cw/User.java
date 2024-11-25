@@ -33,7 +33,7 @@ public class User {
     public void setPreferences(List<String> preferences) { this.preferences = preferences; }
 
     public List<String> getReadingHistory() { return readingHistory; }
-    public void addToReadingHistory(String article) { this.readingHistory.add(article); }
+    public void setReadingHistory(List<String> readingHistory) { this.readingHistory=readingHistory; }
 
     public void addToPreferences(String preference) {
         this.preferences.add(preference);
