@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.AdminController">
+   <children>
+      <Text layoutX="191.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the to the news area" />
+      <Button fx:id="button_view_articles" layoutX="253.0" layoutY="102.0" mnemonicParsing="false" text="View Articles" />
+      <Button fx:id="button_add_articles" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" text="Add Articles" />
+      <Button fx:id="button_view_users" layoutX="263.0" layoutY="228.0" mnemonicParsing="false" text="View Users" />
+      <Button fx:id="button_back_to_login_page" layoutX="37.0" layoutY="343.0" mnemonicParsing="false" text="back" />
+   </children>
+</AnchorPane>

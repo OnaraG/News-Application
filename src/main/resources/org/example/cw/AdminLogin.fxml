@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.AdminLoginController">
+   <children>
+      <Label layoutX="266.0" layoutY="32.0" text="Admin Login" />
+      <Label layoutX="56.0" layoutY="95.0" text="Enter the ID" />
+      <Label layoutX="56.0" layoutY="150.0" text="Enter your Name" />
+      <Label layoutX="56.0" layoutY="237.0" text="Enter your password" />
+      <Label layoutX="56.0" layoutY="296.0" text="confirm password" />
+      <Button fx:id="button_back_to_login_page" layoutX="30.0" layoutY="366.0" mnemonicParsing="false" text="Back" />
+      <TextField fx:id="text_admin_id" layoutX="192.0" layoutY="91.0" />
+      <TextField fx:id="text_admin_name" layoutX="193.0" layoutY="146.0" />
+      <TextField fx:id="text_admin_password" layoutX="208.0" layoutY="233.0" />
+      <TextField fx:id="text_admin_password_confirmation" layoutX="225.0" layoutY="292.0" />
+      <Button fx:id="button_enter_admin_details" layoutX="283.0" layoutY="353.0" mnemonicParsing="false" onAction="#validateAdminLogin" text="Enter" />
+   </children>
+</AnchorPane>

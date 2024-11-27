@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.ViewArticlesController">
+   <children>
+      <Text layoutX="289.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View Articles" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="73.0" prefHeight="323.0" prefWidth="581.0" vbarPolicy="ALWAYS">
+        <content>
+            <VBox prefHeight="318.0" prefWidth="577.0" spacing="7.0">
+               <children>
+                  <VBox fx:id="article01" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="578.0" spacing="3.0" style="-fx-background-color: red;">
+                     <children>
+                        <Label fx:id="label_news_title" text="Title" />
+                        <Button fx:id="button_delete" alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Delete">
+                           <VBox.margin>
+                              <Insets left="491.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label fx:id="label_news_body" text="Body" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="article02" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;">
+                     <children>
+                        <Label fx:id="label_news_title" text="Title" />
+                        <Button fx:id="button_delete" alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Delete">
+                           <VBox.margin>
+                              <Insets left="491.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label fx:id="label_news_body" text="Body" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="article03" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
+                  <VBox fx:id="article04" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
+                  <VBox fx:id="article05" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
+               </children>
+            </VBox>
+        </content>
+      </ScrollPane>
+      <Button fx:id="button_back_to_admin" layoutX="29.0" layoutY="31.0" mnemonicParsing="false" text="Back" />
+   </children>
+</AnchorPane>

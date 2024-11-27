@@ -17,6 +17,8 @@ public class LogInController implements Initializable {
     @FXML
     private Button button_sign_in;
     @FXML
+    private Button button_admin;
+    @FXML
     private TextField tf_username;
     @FXML
     private TextField tf_password;
@@ -33,10 +35,16 @@ public class LogInController implements Initializable {
         button_sign_in.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 DBUtils.changeScene(event,"sign-up.fxml","Sign up",null);
             }
         });
 
-
+        button_admin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event,"AdminLogin.fxml","Admin Login",null);
+            }
+        });
     }
 }

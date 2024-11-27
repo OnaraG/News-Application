@@ -39,6 +39,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Button fx:id="button_admin" layoutX="102.0" layoutY="361.0" mnemonicParsing="false" text="Admin" />
          </children>
       </AnchorPane>
    </right>
