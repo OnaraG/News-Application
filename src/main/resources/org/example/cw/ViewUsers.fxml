@@ -83,6 +83,6 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button fx:id="button_back_to_admin" layoutX="43.0" layoutY="10.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="button_back_to_admin" layoutX="43.0" layoutY="10.0" mnemonicParsing="false" onAction="#navigateBackToAdmin" text="Back" />
    </children>
 </AnchorPane>

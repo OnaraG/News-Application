@@ -1,16 +1,23 @@
 package org.example.cw;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.sql.*;
 
-public class ViewArticlesController {
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
+
+public class ViewArticlesController implements Initializable{
 
     @FXML
     private VBox articleContainer;
+    @FXML
+    private Button button_back_to_admin;
 
     /**
      * Initialize the controller and load articles.
@@ -43,7 +50,7 @@ public class ViewArticlesController {
                 bodyLabel.setWrapText(true);
 
                 Button deleteButton = new Button("Delete");
-                deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                deleteButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
                 deleteButton.setOnAction(e -> deleteArticle(title)); // Delete article by title
 
                 // Add labels and button to the article box
@@ -80,5 +87,15 @@ public class ViewArticlesController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        button_back_to_admin.setOnAction(event1 ->
+                DBUtils.changeScene(event1, "AdminController.fxml", "Admin Dashboard", null));
+
+
     }
 }

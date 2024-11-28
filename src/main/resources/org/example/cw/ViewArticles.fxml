@@ -15,7 +15,7 @@
         <content>
             <VBox prefHeight="318.0" prefWidth="577.0" spacing="7.0">
                <children>
-                  <VBox fx:id="article01" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="578.0" spacing="3.0" style="-fx-background-color: red;">
+                  <VBox fx:id="articleContainer" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="578.0" spacing="3.0" style="-fx-background-color: red;">
                      <children>
                         <Label fx:id="label_news_title" text="Title" />
                         <Button fx:id="button_delete" alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Delete">
@@ -26,24 +26,10 @@
                         <Label fx:id="label_news_body" text="Body" />
                      </children>
                   </VBox>
-                  <VBox fx:id="article02" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;">
-                     <children>
-                        <Label fx:id="label_news_title" text="Title" />
-                        <Button fx:id="button_delete" alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Delete">
-                           <VBox.margin>
-                              <Insets left="491.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Label fx:id="label_news_body" text="Body" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="article03" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
-                  <VBox fx:id="article04" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
-                  <VBox fx:id="article05" prefHeight="51.0" prefWidth="578.0" style="-fx-background-color: red;" />
                </children>
             </VBox>
         </content>
       </ScrollPane>
-      <Button fx:id="button_back_to_admin" layoutX="29.0" layoutY="31.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="button_back_to_admin" layoutX="29.0" layoutY="31.0" mnemonicParsing="false" onAction="#navigateBackToAdmin" text="Back" />
    </children>
 </AnchorPane>
