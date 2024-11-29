@@ -32,6 +32,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private Button button_next_news;
+    @FXML
+    private Button button_see_recommendations;
+    @FXML
+    private Button button_back_news;
 
     private List<News> newsList = new ArrayList<>();
     private int currentNewsIndex = 0;
@@ -39,23 +43,13 @@ public class HomeController implements Initializable {
 
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        button_log_out.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "LogIn.fxml","Log In!",null);
-            }
-        });
-
-    }
 
     public void setUserInformation(String username){
 
         label_home.setText("Welcome "+username+"!");
         // Fetch the user ID based on username.
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
             String query = "SELECT user_id FROM users WHERE username = ?";
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, username);
@@ -77,7 +71,7 @@ public class HomeController implements Initializable {
     private void loadNews() {
         newsList.clear(); // Clear any existing news.
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
             String query = "SELECT * FROM news";
             try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -102,6 +96,17 @@ public class HomeController implements Initializable {
         } else {
             news_title.setText("No more news");
             news_body.setText("");
+        }
+    }
+
+    @FXML
+    private void handleBackNewsButton(ActionEvent event) {
+        if (currentNewsIndex > 0) {
+            currentNewsIndex--;
+            displayCurrentNews();
+        } else {
+            // Notify the user they're at the first article
+            System.out.println("No previous articles available.");
         }
     }
 
@@ -137,7 +142,7 @@ public class HomeController implements Initializable {
     }
 
     private void saveReadingHistory(int newsId) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
             String query = "INSERT INTO reading_history (user_id, news_id) VALUES (?, ?)";
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setInt(1, userId);
@@ -150,7 +155,7 @@ public class HomeController implements Initializable {
     }
 
     private void addToPreferences(String category) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
             String query = "INSERT INTO preferences (user_id, preference) VALUES (?, ?)";
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setInt(1, userId);
@@ -160,6 +165,15 @@ public class HomeController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        button_see_recommendations.setOnAction(event1 ->
+                DBUtils.changeScene(event1, "ViewRecommendations.fxml", "Recommendations", null));
+        button_log_out.setOnAction(event ->
+                DBUtils.changeScene(event,"LogIn.fxml","Log In",null));
+
     }
 }
 

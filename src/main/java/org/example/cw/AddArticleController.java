@@ -1,6 +1,5 @@
 package org.example.cw;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddArticleController implements Initializable{
+import static org.example.cw.ArticleCategorizer.categorizeArticle; // Import the categorization logic
+
+public class AddArticleController implements Initializable {
 
     @FXML
     private TextField text_article_title;
@@ -28,6 +29,7 @@ public class AddArticleController implements Initializable{
 
     @FXML
     private Button button_back_to_admin;
+
     /**
      * Method to handle the addition of a new article to the database.
      */
@@ -42,16 +44,20 @@ public class AddArticleController implements Initializable{
             return;
         }
 
-        // Insert article into the database
+        // Categorize the article based on its content
+        String category = categorizeArticle(title, body);
+
+        // Insert article into the database with its category
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005");
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO news (title, body) VALUES (?, ?)")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO news (title, body, category) VALUES (?, ?, ?)")) {
 
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, body);
+            preparedStatement.setString(3, category); // Add the category to the database
             preparedStatement.executeUpdate();
 
             // Success alert and clear input fields
-            showAlert(Alert.AlertType.INFORMATION, "Article added successfully!");
+            showAlert(Alert.AlertType.INFORMATION, "Article added successfully! Categorized as: " + category);
             text_article_title.clear();
             text_article_body.clear();
 
@@ -79,6 +85,5 @@ public class AddArticleController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         button_back_to_admin.setOnAction(event1 ->
                 DBUtils.changeScene(event1, "Admin.fxml", "Admin Dashboard", null));
-
     }
 }

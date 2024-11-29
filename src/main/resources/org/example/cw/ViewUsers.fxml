@@ -16,7 +16,7 @@
          <content>
             <VBox prefHeight="334.0" prefWidth="578.0">
                <children>
-                  <VBox fx:id="user01" prefHeight="75.0" prefWidth="578.0">
+                  <VBox fx:id="userContainer" prefHeight="75.0" prefWidth="578.0">
                      <children>
                         <HBox prefHeight="75.0" prefWidth="157.0">
                            <children>
@@ -37,52 +37,10 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="user02" prefHeight="75.0" prefWidth="578.0">
-                     <children>
-                        <HBox prefHeight="75.0" prefWidth="157.0">
-                           <children>
-                              <Label text="user id:" />
-                              <Text fx:id="user_id011" strokeType="OUTSIDE" strokeWidth="0.0" text="(id of the user)" wrappingWidth="80.52618432044983" />
-                              <Button fx:id="button_delete" mnemonicParsing="false" text="delete">
-                                 <HBox.margin>
-                                    <Insets left="400.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="75.0" prefWidth="157.0">
-                           <children>
-                              <Label text="user  name:" />
-                              <Text fx:id="user_name02" strokeType="OUTSIDE" strokeWidth="0.0" text="(name of the user)" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="user03" prefHeight="75.0" prefWidth="578.0">
-                     <children>
-                        <HBox prefHeight="75.0" prefWidth="157.0">
-                           <children>
-                              <Label text="user id:" />
-                              <Text fx:id="user_id03" strokeType="OUTSIDE" strokeWidth="0.0" text="(id of the user)" wrappingWidth="80.52618432044983" />
-                              <Button fx:id="button_delete" mnemonicParsing="false" text="delete">
-                                 <HBox.margin>
-                                    <Insets left="400.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="75.0" prefWidth="157.0">
-                           <children>
-                              <Label text="user  name:" />
-                              <Text fx:id="user_name03" strokeType="OUTSIDE" strokeWidth="0.0" text="(name of the user)" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
                </children>
             </VBox>
          </content>
       </ScrollPane>
-      <Button fx:id="button_back_to_admin" layoutX="43.0" layoutY="10.0" mnemonicParsing="false" onAction="#navigateBackToAdmin" text="Back" />
+      <Button fx:id="button_back_to_admin" layoutX="43.0" layoutY="10.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

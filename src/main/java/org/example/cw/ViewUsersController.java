@@ -2,30 +2,30 @@ package org.example.cw;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class ViewUsersController {
+public class ViewUsersController implements Initializable {
 
     @FXML
     private VBox userContainer;
+    @FXML
+    private Button button_back_to_admin;
 
     /**
      * Initializes the controller and loads the user list.
      */
-    @FXML
-    public void initialize() {
-        loadUsers();
-    }
-
     /**
      * Loads the list of users and displays them dynamically in the VBox.
      */
@@ -114,8 +114,13 @@ public class ViewUsersController {
         alert.showAndWait();
     }
 
-    @FXML
-    private void navigateBackToAdmin(ActionEvent event) {
-        DBUtils.changeScene(event, "AdminController.fxml", "Admin Dashboard", null);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Load articles when the page is initialized
+        loadUsers();
+
+        // Set up the back button
+        button_back_to_admin.setOnAction(event1 ->
+                DBUtils.changeScene(event1, "Admin.fxml", "Admin Dashboard", null));
     }
 }

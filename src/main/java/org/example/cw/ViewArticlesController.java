@@ -22,9 +22,6 @@ public class ViewArticlesController implements Initializable{
     /**
      * Initialize the controller and load articles.
      */
-    public void initialize() {
-        loadArticles();
-    }
 
     /**
      * Loads articles from the database and displays them in the articleContainer.
@@ -93,9 +90,11 @@ public class ViewArticlesController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Load articles when the page is initialized
+        loadArticles();
+
+        // Set up the back button
         button_back_to_admin.setOnAction(event1 ->
-                DBUtils.changeScene(event1, "AdminController.fxml", "Admin Dashboard", null));
-
-
+                DBUtils.changeScene(event1, "Admin.fxml", "Admin Dashboard", null));
     }
 }
