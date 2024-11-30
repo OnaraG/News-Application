@@ -9,18 +9,17 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.HomeController">
    <children>
-      <Label fx:id="label_welcome" layoutX="350.0" layoutY="10.0" text="Home">
+      <Label fx:id="label_welcome" layoutX="350.0" layoutY="10.0" text="Recommendations">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="button_log_out" layoutX="10.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleLogOutButton" text="Log out" />
+      <Button fx:id="button_back_to_home" layoutX="10.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleLogOutButton" text="Back" />
       <ScrollPane fx:id="articleScrollPane" hbarPolicy="NEVER" layoutX="20.0" layoutY="50.0" prefHeight="450.0" prefWidth="760.0" vbarPolicy="ALWAYS">
          <content>
             <VBox fx:id="articleContainer" alignment="CENTER" spacing="10" />
          </content>
       </ScrollPane>
       <Button fx:id="button_see_more" layoutX="350.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleSeeMoreButton" text="See More" />
-      <Button fx:id="button_see_recommendations" layoutX="573.0" layoutY="15.0" mnemonicParsing="false" text="See recommendations" />
    </children>
 </AnchorPane>

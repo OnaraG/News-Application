@@ -12,7 +12,7 @@ public class WholeArticleController {
     private Label news_title;
 
     @FXML
-    private TextArea news_content;
+    private Label news_content;
 
     @FXML
     private Button button_back_to_recommendations;

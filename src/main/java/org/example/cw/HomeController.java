@@ -26,6 +26,8 @@ public class HomeController {
 
     @FXML
     private Button button_log_out;
+    @FXML
+    private Label label_welcome;
 
     private int articleIndex = 0;
     private static final int ARTICLES_PER_BATCH = 9;
@@ -87,7 +89,7 @@ public class HomeController {
         addToReadingHistory(news.getNewsId());
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("WholeArticle.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cw/WholeArticle.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
 
@@ -97,6 +99,7 @@ public class HomeController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Unable to open the full article view.");
         }
     }
 
@@ -163,6 +166,10 @@ public class HomeController {
             showAlert1("Error", "Unable to load the login page.");
         }
     }
+    public void setUserInformation(String username) {
+        label_welcome.setText("Welcome , " + username + "!");
+    }
+
 
     private void showAlert1(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -170,6 +177,24 @@ public class HomeController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void handleSeeRecommendationsButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Recommendations.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+
+            RecommendationsController controller = loader.getController();
+            controller.displayRecommendations(); // Pass user-specific recommendations to the controller
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Unable to load recommendations view.");
+        }
+    }
+
 
 
 }

@@ -96,10 +96,8 @@ public class DBUtils {
                     user.setPreferences(getUserPreferences(userId));
                     user.setReadingHistory(getUserReadingHistory(userId));
                     // After validating the user credentials in the database:
-                    int UserId = resultSet.getInt("user_id");
-                    String Username = resultSet.getString("username");
 
-                    CurrentUser.setUser(UserId, Username);
+                    CurrentUser.setUser(userId, username);
 
 // Redirect to the home page after successful login
 
