@@ -9,40 +9,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.HomeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.HomeController">
    <children>
-      <Label fx:id="label_home" layoutX="216.0" layoutY="14.0" prefHeight="45.0" prefWidth="147.0" text="Home">
+      <Label fx:id="label_home" layoutX="350.0" layoutY="10.0" text="Home">
          <font>
-            <Font size="30.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="button_log_out" layoutX="21.0" layoutY="353.0" mnemonicParsing="false" text="Log out" />
-      <Button fx:id="button_next_news" layoutX="505.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleNextNewsButton" text="Next News" />
-      <Button fx:id="button_see_recommendations" layoutX="439.0" layoutY="24.0" mnemonicParsing="false" text="SEE Recommendation" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="3.0" layoutY="91.0" prefHeight="261.0" prefWidth="573.0" vbarPolicy="ALWAYS">
+      <Button fx:id="button_log_out" layoutX="10.0" layoutY="550.0" mnemonicParsing="false" text="Log out" />
+      <ScrollPane fx:id="articleScrollPane" layoutX="20.0" layoutY="50.0" prefHeight="450.0" prefWidth="760.0" hbarPolicy="NEVER" vbarPolicy="ALWAYS">
          <content>
-            <VBox prefHeight="258.0" prefWidth="558.0">
-               <children>
-                  <VBox fx:id="articleContainer1" prefHeight="158.0" prefWidth="558.0">
-                     <children>
-                        <HBox prefHeight="133.0" prefWidth="558.0">
-                           <children>
-                              <ImageView fx:id="news_image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                              <VBox prefHeight="158.0" prefWidth="265.0">
-                                 <children>
-                                    <Label fx:id="news_title" text="Label" />
-                                    <Label fx:id="news_body" text="Label" />
-                                 </children>
-                              </VBox>
-                              <Button fx:id="button_read" mnemonicParsing="false" text="Read" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="articleContainer2" prefHeight="150.0" prefWidth="312.0" />
-               </children>
-            </VBox>
+            <VBox fx:id="articleContainer" spacing="10" alignment="CENTER" />
          </content>
       </ScrollPane>
+      <Button fx:id="button_see_more" layoutX="350.0" layoutY="510.0" mnemonicParsing="false" text="See More" />
    </children>
 </AnchorPane>

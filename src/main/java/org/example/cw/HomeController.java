@@ -1,182 +1,175 @@
 package org.example.cw;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-import java.net.URL;
-import java.sql.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class HomeController implements Initializable {
+public class HomeController {
+
+    @FXML
+    private VBox articleContainer;
+
+    @FXML
+    private Button button_see_more;
+
     @FXML
     private Button button_log_out;
-    @FXML
-    private Label label_home;
 
-    @FXML
-    private TextField news_title;
+    private int articleIndex = 0;
+    private static final int ARTICLES_PER_BATCH = 9;
 
-    @FXML
-    private TextArea news_body;
+    private List<News> articles;
 
-    @FXML
-    private Button button_like;
-
-    @FXML
-    private Button button_next_news;
-    @FXML
-    private Button button_see_recommendations;
-    @FXML
-    private Button button_back_news;
-
-    private List<News> newsList = new ArrayList<>();
-    private int currentNewsIndex = 0;
-    private int userId; // Retrieve user ID when the user logs in.
-
-
-
-
-
-    public void setUserInformation(String username){
-
-        label_home.setText("Welcome "+username+"!");
-        // Fetch the user ID based on username.
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
-            String query = "SELECT user_id FROM users WHERE username = ?";
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
-                ps.setString(1, username);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        userId = rs.getInt("user_id");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Load all news from the database.
-        loadNews();
-        displayCurrentNews();
+    public void initialize() {
+        articles = fetchArticlesFromDatabase(); // Fetch all articles from the database
+        loadNextArticles(); // Load the first batch of articles
     }
 
-    private void loadNews() {
-        newsList.clear(); // Clear any existing news.
+    @FXML
+    private void handleSeeMoreButton() {
+        if (articleIndex < articles.size()) {
+            loadNextArticles();
+        } else {
+            showAlert("No more articles", "All articles have been displayed.");
+        }
+    }
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
+    private void loadNextArticles() {
+        int endIndex = Math.min(articleIndex + ARTICLES_PER_BATCH, articles.size());
+        for (int i = articleIndex; i < endIndex; i++) {
+            News news = articles.get(i);
+            addArticleToView(news);
+        }
+        articleIndex = endIndex;
+    }
+
+    private void addArticleToView(News news) {
+        HBox articleBox = new HBox(10);
+        articleBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
+
+        VBox detailsBox = new VBox(5);
+
+        Label titleLabel = new Label(news.getTitle());
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        // Display only the first two sentences
+        Label previewLabel = new Label(getFirstTwoSentences(news.getBody()));
+        previewLabel.setWrapText(true);
+
+        Button readButton = new Button("Read");
+        readButton.setOnAction(event -> openFullArticle(news)); // Open the full article in a new window
+
+        detailsBox.getChildren().addAll(titleLabel, previewLabel, readButton);
+        articleBox.getChildren().add(detailsBox);
+
+        articleContainer.getChildren().add(articleBox);
+    }
+
+    private String getFirstTwoSentences(String text) {
+        String[] sentences = text.split("\\.\\s+");
+        return sentences.length > 1 ? sentences[0] + ". " + sentences[1] + "." : text;
+    }
+
+    private void openFullArticle(News news) {
+        // Track the article in reading history
+        addToReadingHistory(news.getNewsId());
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("WholeArticle.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+
+            WholeArticleController controller = loader.getController();
+            controller.displayArticle(news); // Pass the article details to the controller
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addToReadingHistory(int articleId) {
+        try (Connection conn = DBUtils.getConnection()) {
+            String query = "INSERT INTO reading_history (reading_history_user_id, article_id) VALUES (?, ?)";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, CurrentUser.getId()); // Replace with the actual logged-in user ID
+            statement.setInt(2, articleId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<News> fetchArticlesFromDatabase() {
+        List<News> articles = new ArrayList<>();
+        try (Connection conn = DBUtils.getConnection()) {
             String query = "SELECT * FROM news";
-            try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("news_id");
-                    String title = rs.getString("title");
-                    String body = rs.getString("body");
-                    String category = rs.getString("category");
+            ResultSet rs = conn.createStatement().executeQuery(query);
 
-                    newsList.add(new News(id, title, body, category));
-                }
+            while (rs.next()) {
+                News news = new News(
+                        rs.getInt("news_id"),
+                        rs.getString("title"),
+                        rs.getString("body"),
+                        rs.getString("category")
+                );
+                articles.add(news);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return articles;
     }
 
-    private void displayCurrentNews() {
-        if (currentNewsIndex >= 0 && currentNewsIndex < newsList.size()) {
-            News currentNews = newsList.get(currentNewsIndex);
-            news_title.setText(currentNews.getTitle());
-            news_body.setText(currentNews.getBody());
-        } else {
-            news_title.setText("No more news");
-            news_body.setText("");
-        }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
-    private void handleBackNewsButton(ActionEvent event) {
-        if (currentNewsIndex > 0) {
-            currentNewsIndex--;
-            displayCurrentNews();
-        } else {
-            // Notify the user they're at the first article
-            System.out.println("No previous articles available.");
-        }
-    }
+    private void handleLogOutButton() {
+        // Clear the current user session
+        CurrentUser.clear();
 
-    @FXML
-    private void handleLikeButton(ActionEvent event) {
-        if (currentNewsIndex >= 0 && currentNewsIndex < newsList.size()) {
-            News likedNews = newsList.get(currentNewsIndex);
+        // Redirect to the login page
+        try {
+            // Load the Login.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            Parent root = loader.load();
 
-            // Save to reading history
-            saveReadingHistory(likedNews.getNewsId());
+            // Get the current stage and set the scene
+            Stage stage = (Stage) button_log_out.getScene().getWindow();
+            stage.setScene(new Scene(root));
 
-            // Add category to preferences
-            addToPreferences(likedNews.getCategory());
-
-            // Move to the next news
-            currentNewsIndex++;
-            displayCurrentNews();
-        }
-    }
-
-    @FXML
-    private void handleNextNewsButton(ActionEvent event) {
-        if (currentNewsIndex >= 0 && currentNewsIndex < newsList.size()) {
-            News skippedNews = newsList.get(currentNewsIndex);
-
-            // Save to reading history as skipped
-            saveReadingHistory(skippedNews.getNewsId());
-
-            // Move to the next news
-            currentNewsIndex++;
-            displayCurrentNews();
-        }
-    }
-
-    private void saveReadingHistory(int newsId) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
-            String query = "INSERT INTO reading_history (user_id, news_id) VALUES (?, ?)";
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
-                ps.setInt(1, userId);
-                ps.setInt(2, newsId);
-                ps.executeUpdate();
-            }
-        } catch (SQLException e) {
+            // Optionally, set the title for the login window
+            stage.setTitle("Login");
+            stage.show();
+        } catch (Exception e) {
             e.printStackTrace();
+            showAlert1("Error", "Unable to load the login page.");
         }
     }
 
-    private void addToPreferences(String category) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "Onaragamage2005")) {
-            String query = "INSERT INTO preferences (user_id, preference) VALUES (?, ?)";
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
-                ps.setInt(1, userId);
-                ps.setString(2, category);
-                ps.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void showAlert1(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        button_see_recommendations.setOnAction(event1 ->
-                DBUtils.changeScene(event1, "ViewRecommendations.fxml", "Recommendations", null));
-        button_log_out.setOnAction(event ->
-                DBUtils.changeScene(event,"LogIn.fxml","Log In",null));
 
-    }
 }
-
-
-
-
