@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.HomeController">
-   <children>
-      <Label fx:id="label_welcome" layoutX="350.0" layoutY="10.0" text="Recommendations">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="button_back_to_home" layoutX="10.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleLogOutButton" text="Back" />
-      <ScrollPane fx:id="articleScrollPane" hbarPolicy="NEVER" layoutX="20.0" layoutY="50.0" prefHeight="450.0" prefWidth="760.0" vbarPolicy="ALWAYS">
-         <content>
-            <VBox fx:id="articleContainer" alignment="CENTER" spacing="10" />
-         </content>
-      </ScrollPane>
-      <Button fx:id="button_see_more" layoutX="350.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleSeeMoreButton" text="See More" />
-   </children>
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.cw.RecommendationsController"
+      spacing="10" style="-fx-padding: 20; -fx-background-color: #f9f9f9;">
+
+   <!-- Title -->
+   <Text text="Recommended Articles"
+         style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+   <!-- Article List Container -->
+   <VBox fx:id="recommendationsContainer" spacing="15"
+         style="-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: lightgray; -fx-border-radius: 5;"
+         VBox.vgrow="ALWAYS">
+   </VBox>
+
+   <!-- Back Button -->
+   <HBox alignment="CENTER" spacing="10">
+      <Button fx:id="button_back_to_home" text="Back to Home"
+              style="-fx-padding: 10; -fx-font-size: 14; -fx-background-color: #0078D7; -fx-text-fill: white;" />
+   </HBox>
+</VBox>

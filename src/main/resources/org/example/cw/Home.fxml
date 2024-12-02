@@ -21,6 +21,6 @@
          </content>
       </ScrollPane>
       <Button fx:id="button_see_more" layoutX="350.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleSeeMoreButton" text="See More" />
-      <Button fx:id="button_see_recommendations" layoutX="573.0" layoutY="15.0" mnemonicParsing="false" text="See recommendations" />
+      <Button fx:id="button_see_recommendations" layoutX="573.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSeeRecommendationsButton" text="See recommendations" />
    </children>
 </AnchorPane>

@@ -110,6 +110,8 @@ public class HomeController {
             statement.setInt(1, CurrentUser.getId()); // Replace with the actual logged-in user ID
             statement.setInt(2, articleId);
             statement.executeUpdate();
+            System.out.println("Article ID: " + articleId + ", User ID: " + CurrentUser.getId());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
