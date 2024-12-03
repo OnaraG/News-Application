@@ -12,9 +12,18 @@
          <font>
             <Font size="34.0" />
          </font></Text>
-      <Button fx:id="button_view_articles" layoutX="391.0" layoutY="198.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="View Articles" />
-      <Button fx:id="button_add_articles" layoutX="391.0" layoutY="313.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="Add Articles" />
-      <Button fx:id="button_view_users" layoutX="391.0" layoutY="422.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="View Users" />
+      <Button fx:id="button_view_articles" layoutX="391.0" layoutY="198.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="View Articles">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="button_add_articles" layoutX="391.0" layoutY="313.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="Add Articles">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="button_view_users" layoutX="391.0" layoutY="422.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="226.0" style="-fx-background-color: #ADD8E6;" text="View Users">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
       <Button fx:id="button_back_to_login_page" layoutX="329.0" layoutY="584.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="back" textFill="#2c78dc" underline="true">
          <font>
             <Font size="18.0" />

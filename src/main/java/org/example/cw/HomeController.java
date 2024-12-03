@@ -79,6 +79,7 @@ public class HomeController {
         articleContainer.getChildren().add(articleBox);
     }
 
+
     private String getFirstTwoSentences(String text) {
         String[] sentences = text.split("\\.\\s+");
         return sentences.length > 1 ? sentences[0] + ". " + sentences[1] + "." : text;

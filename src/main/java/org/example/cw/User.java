@@ -1,5 +1,8 @@
 package org.example.cw;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,4 +41,6 @@ public class User {
     public void addToPreferences(String preference) {
         this.preferences.add(preference);
     }
+
+
 }

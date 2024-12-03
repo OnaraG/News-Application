@@ -43,7 +43,7 @@ public class RecommendationsController {
         Task<List<News>> fetchRecommendationsTask = new Task<>() {
             @Override
             protected List<News> call() throws Exception {
-                return engine.recommendArticlesForUser(CurrentUser.getId());
+                return RecommendationEngine.recommendArticlesForUser(CurrentUser.getId());
             }
         };
 
@@ -72,7 +72,7 @@ public class RecommendationsController {
     // Fetch recommended articles using the RecommendationEngine
     private List<News> getRecommendedArticles(int userId) {
         RecommendationEngine engine = new RecommendationEngine();
-        return engine.recommendArticlesForUser(userId);
+        return RecommendationEngine.recommendArticlesForUser(userId);
     }
 
     // Dynamically add an article to the VBox
