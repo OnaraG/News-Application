@@ -38,10 +38,12 @@ public class RecommendationsController {
 //    }
 
     public void displayRecommendations() {
+        RecommendationEngine engine = new RecommendationEngine();
+
         Task<List<News>> fetchRecommendationsTask = new Task<>() {
             @Override
-            protected List<News> call() {
-                return getRecommendedArticles(CurrentUser.getId());
+            protected List<News> call() throws Exception {
+                return engine.recommendArticlesForUser(CurrentUser.getId());
             }
         };
 
@@ -64,6 +66,7 @@ public class RecommendationsController {
         // Run the task in a background thread
         new Thread(fetchRecommendationsTask).start();
     }
+
 
 
     // Fetch recommended articles using the RecommendationEngine

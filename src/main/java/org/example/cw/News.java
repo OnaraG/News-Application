@@ -17,4 +17,8 @@ public class News {
     public String getTitle() { return title; }
     public String getBody() { return body; }
     public String getCategory() { return category; }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

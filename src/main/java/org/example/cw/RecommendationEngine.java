@@ -71,4 +71,7 @@ public class RecommendationEngine {
 
         return recommendations;
     }
+    public void shutdown() {
+        executor.shutdown();
+    }
 }
