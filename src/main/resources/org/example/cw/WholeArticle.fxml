@@ -4,15 +4,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.WholeArticleController">
+<AnchorPane prefHeight="649.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.WholeArticleController">
    <children>
-      <Label fx:id="news_title" layoutX="286.0" layoutY="46.0" text="Label" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="65.0" layoutY="100.0" prefHeight="267.0" prefWidth="487.0" vbarPolicy="ALWAYS">
+      <Label fx:id="news_title" layoutX="368.0" layoutY="42.0" text="Label">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <ScrollPane hbarPolicy="NEVER" layoutX="41.0" layoutY="100.0" prefHeight="462.0" prefWidth="714.0" vbarPolicy="ALWAYS">
          <content>
-            <Label fx:id="news_content" text="Label" />
+            <Label fx:id="news_content" text="Label">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
          </content>
       </ScrollPane>
-      <Button fx:id="button_back_to_recommendations" layoutX="48.0" layoutY="21.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="button_back_to_recommendations" layoutX="45.0" layoutY="582.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="144.0" style="-fx-background-color: #6285f8;" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

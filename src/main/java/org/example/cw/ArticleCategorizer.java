@@ -137,7 +137,7 @@ public class ArticleCategorizer {
      * @param body  The body of the article.
      * @return The category of the article.
      */
-    private static String categorizeArticle(String title, String body) {
+    public static String categorizeArticle(String title, String body) {
         String text = (title + " " + body).toLowerCase();
 
         if (text.contains("football") || text.contains("cricket") || text.contains("sports") || text.contains("players") || text.contains("playground")) {

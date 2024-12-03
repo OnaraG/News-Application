@@ -7,21 +7,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.ViewUsersController">
+<AnchorPane prefHeight="649.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cw.ViewUsersController">
    <children>
-      <Text layoutX="271.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View The users" />
-      <ScrollPane hbarPolicy="NEVER" layoutY="53.0" prefHeight="345.0" prefWidth="593.0" vbarPolicy="ALWAYS">
+      <Text fill="#582de4" layoutX="282.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View the users">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font></Text>
+      <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="81.0" prefHeight="498.0" prefWidth="740.0" vbarPolicy="ALWAYS">
          <content>
-            <VBox prefHeight="334.0" prefWidth="578.0">
+            <VBox prefHeight="490.0" prefWidth="722.0">
                <children>
-                  <VBox fx:id="userContainer" prefHeight="75.0" prefWidth="578.0">
+                  <VBox fx:id="userContainer" prefHeight="78.0" prefWidth="615.0">
                      <children>
                         <HBox prefHeight="75.0" prefWidth="157.0">
                            <children>
-                              <Label text="user id:" />
-                              <Text fx:id="user_id01" strokeType="OUTSIDE" strokeWidth="0.0" text="(id of the user)" />
+                              <Label text="user id:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
+                              <Text fx:id="user_id01" strokeType="OUTSIDE" strokeWidth="0.0" text="(id of the user)">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Text>
                               <Button fx:id="button_delete" mnemonicParsing="false" text="delete">
                                  <HBox.margin>
                                     <Insets left="400.0" />
@@ -31,8 +41,14 @@
                         </HBox>
                         <HBox prefHeight="75.0" prefWidth="157.0">
                            <children>
-                              <Label text="user  name:" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(name of the user)" />
+                              <Label text="user  name:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(name of the user)">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Text>
                            </children>
                         </HBox>
                      </children>
@@ -41,6 +57,9 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button fx:id="button_back_to_admin" layoutX="43.0" layoutY="10.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="button_back_to_admin" layoutX="19.0" layoutY="590.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="178.0" style="-fx-background-color: #6285f8;" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>
