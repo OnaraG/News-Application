@@ -1,5 +1,6 @@
 package org.example.cw;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,17 +25,46 @@ public class RecommendationsController {
     }
 
     // Fetch and display recommended articles
+//    public void displayRecommendations() {
+//        List<News> recommendedArticles = getRecommendedArticles(CurrentUser.getId());
+//        System.out.println("Recommended articles: " + recommendedArticles.size());
+//        if (recommendedArticles == null || recommendedArticles.isEmpty()) {
+//            addPlaceholderMessage("No recommendations available.");
+//            return;
+//        }
+//        for (News article : recommendedArticles) {
+//            addArticleToView(article);
+//        }
+//    }
+
     public void displayRecommendations() {
-        List<News> recommendedArticles = getRecommendedArticles(CurrentUser.getId());
-        System.out.println("Recommended articles: " + recommendedArticles.size());
-        if (recommendedArticles == null || recommendedArticles.isEmpty()) {
-            addPlaceholderMessage("No recommendations available.");
-            return;
-        }
-        for (News article : recommendedArticles) {
-            addArticleToView(article);
-        }
+        Task<List<News>> fetchRecommendationsTask = new Task<>() {
+            @Override
+            protected List<News> call() {
+                return getRecommendedArticles(CurrentUser.getId());
+            }
+        };
+
+        fetchRecommendationsTask.setOnSucceeded(event -> {
+            List<News> recommendedArticles = fetchRecommendationsTask.getValue();
+            if (recommendedArticles == null || recommendedArticles.isEmpty()) {
+                addPlaceholderMessage("No recommendations available.");
+            } else {
+                for (News article : recommendedArticles) {
+                    addArticleToView(article);
+                }
+            }
+        });
+
+        fetchRecommendationsTask.setOnFailed(event -> {
+            addPlaceholderMessage("Failed to load recommendations.");
+            fetchRecommendationsTask.getException().printStackTrace();
+        });
+
+        // Run the task in a background thread
+        new Thread(fetchRecommendationsTask).start();
     }
+
 
     // Fetch recommended articles using the RecommendationEngine
     private List<News> getRecommendedArticles(int userId) {

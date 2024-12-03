@@ -5,8 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class RecommendationEngine {
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+
+    public Future<List<News>> recommendArticlesForUserAsync(int userId) {
+        return executor.submit(() -> recommendArticlesForUser(userId));
+    }
 
     public List<News> recommendArticlesForUser(int userId) {
         List<News> recommendations = new ArrayList<>();
