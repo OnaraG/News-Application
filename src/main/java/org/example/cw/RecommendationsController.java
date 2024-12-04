@@ -38,7 +38,6 @@ public class RecommendationsController {
 //    }
 
     public void displayRecommendations() {
-        RecommendationEngine engine = new RecommendationEngine();
 
         Task<List<News>> fetchRecommendationsTask = new Task<>() {
             @Override

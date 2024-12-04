@@ -32,7 +32,7 @@ public class AdminController implements Initializable {
         // Navigate to "View Users" page
         button_view_users.setOnAction(event ->
                 DBUtils.changeScene(event, "ViewUsers.fxml", "View Users", null));
-
+ 
         // Navigate back to login page
         button_back_to_login_page.setOnAction(event ->
                 DBUtils.changeScene(event, "LogIn.fxml", "Log-In", null));

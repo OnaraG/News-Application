@@ -154,41 +154,41 @@ public class DBUtils {
         return readingHistory;
     }
 
-    public static void saveUserPreferences(int userId, List<String> preferences) {
-        String query = "INSERT INTO preferences (user_id, preference) VALUES (?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            for (String preference : preferences) {
-                preparedStatement.setInt(1, userId);
-                preparedStatement.setString(2, preference);
-                preparedStatement.addBatch();
-            }
-
-            preparedStatement.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void saveUserReadingHistory(int userId, List<String> readingHistory) {
-        String query = "INSERT INTO reading_history (reading_history_user_id, article_id) VALUES (?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            for (String articleId : readingHistory) {
-                preparedStatement.setInt(1, userId);
-                preparedStatement.setInt(2, Integer.parseInt(articleId));
-                preparedStatement.addBatch();
-            }
-
-            preparedStatement.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void saveUserPreferences(int userId, List<String> preferences) {
+//        String query = "INSERT INTO preferences (user_id, preference) VALUES (?, ?)";
+//
+//        try (Connection connection = getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//
+//            for (String preference : preferences) {
+//                preparedStatement.setInt(1, userId);
+//                preparedStatement.setString(2, preference);
+//                preparedStatement.addBatch();
+//            }
+//
+//            preparedStatement.executeBatch();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void saveUserReadingHistory(int userId, List<String> readingHistory) {
+//        String query = "INSERT INTO reading_history (reading_history_user_id, article_id) VALUES (?, ?)";
+//
+//        try (Connection connection = getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//
+//            for (String articleId : readingHistory) {
+//                preparedStatement.setInt(1, userId);
+//                preparedStatement.setInt(2, Integer.parseInt(articleId));
+//                preparedStatement.addBatch();
+//            }
+//
+//            preparedStatement.executeBatch();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
