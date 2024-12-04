@@ -21,7 +21,7 @@ public class RecommendationsController {
     // Initialize the controller
     public void initialize() {
         button_back_to_home.setOnAction(event -> closeWindow());
-        displayRecommendations(); // Trigger recommendations when the view loads
+//        displayRecommendations(); // Trigger recommendations when the view loads
     }
 
     // Fetch and display recommended articles
@@ -65,14 +65,6 @@ public class RecommendationsController {
 
         // Run the task in a background thread
         new Thread(fetchRecommendationsTask).start();
-    }
-
-
-
-    // Fetch recommended articles using the RecommendationEngine
-    private List<News> getRecommendedArticles(int userId) {
-        RecommendationEngine engine = new RecommendationEngine();
-        return RecommendationEngine.recommendArticlesForUser(userId);
     }
 
     // Dynamically add an article to the VBox

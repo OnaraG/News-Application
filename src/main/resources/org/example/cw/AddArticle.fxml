@@ -22,7 +22,7 @@
             <Font size="18.0" />
          </font></Label>
       <TextField fx:id="text_article_title" layoutX="191.0" layoutY="114.0" prefHeight="44.0" prefWidth="530.0" promptText="Title" />
-      <TextArea fx:id="text_article_body" layoutX="191.0" layoutY="190.0" prefHeight="284.0" prefWidth="530.0" promptText="Content" />
+      <TextArea fx:id="text_article_body" layoutX="191.0" layoutY="190.0" prefHeight="284.0" prefWidth="530.0" promptText="Content" wrapText="true" />
       <Button fx:id="button_back_to_admin" layoutX="55.0" layoutY="581.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="182.0" style="-fx-background-color: #6285f1;" text="Back">
          <font>
             <Font size="20.0" />

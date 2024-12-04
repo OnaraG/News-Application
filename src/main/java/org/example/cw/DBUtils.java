@@ -135,7 +135,7 @@ public class DBUtils {
 
     public static List<String> getUserReadingHistory(int userId) {
         List<String> readingHistory = new ArrayList<>();
-        String query = "SELECT article_title FROM reading_history WHERE reading_history_user_id = ?";
+        String query = "SELECT article_Id FROM reading_history WHERE reading_history_user_id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -144,7 +144,7 @@ public class DBUtils {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    readingHistory.add(resultSet.getString("article_title"));
+                    readingHistory.add(resultSet.getString("article_Id"));
                 }
             }
         } catch (SQLException e) {
