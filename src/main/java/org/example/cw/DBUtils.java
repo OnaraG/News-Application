@@ -49,10 +49,12 @@ public class DBUtils {
     public static void signUpUser(ActionEvent event, String username, String password) {
         String checkQuery = "SELECT username FROM users WHERE username = ?";
         String insertQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
+        String selectQuery = "SELECT LAST_INSERT_ID()";  // To get the last inserted ID (the user_id)
 
         try (Connection connection = getConnection();
              PreparedStatement psCheckUserExists = connection.prepareStatement(checkQuery);
-             PreparedStatement psInsert = connection.prepareStatement(insertQuery)) {
+             PreparedStatement psInsert = connection.prepareStatement(insertQuery);
+             PreparedStatement psSelect = connection.prepareStatement(selectQuery)){
 
             psCheckUserExists.setString(1, username);
 
@@ -66,6 +68,15 @@ public class DBUtils {
             psInsert.setString(1, username);
             psInsert.setString(2, password);
             psInsert.executeUpdate();
+
+            // Get the newly inserted user_id
+            ResultSet rs = psSelect.executeQuery();
+            if (rs.next()) {
+                int userId = rs.getInt(1);  // Get the last inserted user_id
+                // Set the current user with the userId and username
+                CurrentUser.setUser(userId, username);
+            }
+
             changeScene(event, "Home.fxml", "Welcome!", username);
 
         } catch (SQLException e) {

@@ -144,14 +144,16 @@ public class ArticleCategorizer {
             return "Sports";
         } else if (text.contains("AI") || text.contains("technology") || text.contains("software") || text.contains("IT") || text.contains("hardware") || text.contains("robots")) {
             return "Technology";
-        } else if (text.contains("election") || text.contains("government") || text.contains("politics")) {
+        } else if (text.contains("election") || text.contains("government") || text.contains("politics") || text.contains("president")) {
             return "Politics";
         } else if (text.contains("vaccine") || text.contains("medicine") || text.contains("health") || text.contains("doctors") || text.contains("pandemic") || text.contains("fever") || text.contains("patient")) {
             return "Health";
+        }else if (text.contains("science") || text.contains("laboratory") || text.contains("scientist") || text.contains("rocket") || text.contains("experiment")){
+            return "Science";
         } else {
-            return "General"; // Default category
+                return "General"; // Default category
+            }
         }
-    }
 
     /**
      * Represents a categorization task for a list of articles, to be executed in parallel.

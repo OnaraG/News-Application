@@ -61,14 +61,16 @@ public class HomeController {
         HBox articleBox = new HBox(10);
         articleBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
 
-        VBox detailsBox = new VBox(5);
+        VBox detailsBox = new VBox(15);
 
         Label titleLabel = new Label(news.getTitle());
         titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
+
         // Display only the first two sentences
         Label previewLabel = new Label(getFirstTwoSentences(news.getBody()));
         previewLabel.setWrapText(true);
+        previewLabel.setMaxWidth(690); // Adjust as needed to fit the window siz
 
         Button readButton = new Button("Read");
         readButton.setOnAction(event -> openFullArticle(news)); // Open the full article in a new window
@@ -106,9 +108,22 @@ public class HomeController {
 
     private void addToReadingHistory(int articleId) {
         try (Connection conn = DBUtils.getConnection()) {
+            // Check if the user exists
+            String userCheckQuery = "SELECT user_id FROM users WHERE user_id = ?";
+            PreparedStatement userCheckStmt = conn.prepareStatement(userCheckQuery);
+            userCheckStmt.setInt(1, CurrentUser.getId());
+            ResultSet userResult = userCheckStmt.executeQuery();
+
+            if (!userResult.next()) {
+                // User doesn't exist, don't proceed with the insertion
+                System.out.println("Error: User does not exist.");
+                return;
+            }
+
+            // Proceed to add to reading history
             String query = "INSERT INTO reading_history (reading_history_user_id, article_id) VALUES (?, ?)";
             PreparedStatement statement = conn.prepareStatement(query);
-            statement.setInt(1, CurrentUser.getId()); // Replace with the actual logged-in user ID
+            statement.setInt(1, CurrentUser.getId());
             statement.setInt(2, articleId);
             statement.executeUpdate();
             System.out.println("Article ID: " + articleId + ", User ID: " + CurrentUser.getId());
