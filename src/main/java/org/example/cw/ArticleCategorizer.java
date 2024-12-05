@@ -65,9 +65,6 @@ public class ArticleCategorizer {
         categorizeArticlesInDatabase();
     }
 
-    /**
-     * Categorizes all uncategorized articles in the database concurrently.
-     */
     public static void categorizeArticlesInDatabase() {
         List<News> news = fetchArticlesFromDatabase();
 
