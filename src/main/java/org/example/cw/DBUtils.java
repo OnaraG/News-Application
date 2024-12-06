@@ -13,32 +13,49 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for managing database operations and scene transitions in the application.
+ */
 public class DBUtils {
 
+    // Database connection details
     private static final String DB_URL = "jdbc:mysql://localhost:3306/cw";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "Onaragamage2005";
 
-    // Centralized method for getting a database connection
+    /**
+     * Establishes a connection to the database.
+     *
+     * @return A Connection object to interact with the database.
+     * @throws SQLException If there is an issue with establishing the connection.
+     */
     static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    // Simplified scene-changing method
+    /**
+     * Changes the current scene to the specified FXML file.
+     *
+     * @param event    The event triggering the scene change.
+     * @param fxmlFile The name of the FXML file to load.
+     * @param title    The title of the new stage.
+     * @param username The username to pass to the controller (can be null).
+     */
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username) {
         try {
             FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
             Parent root = loader.load();
 
-            // If a username is provided, pass it to the controller
+            // Pass username to the controller if provided
             if (username != null) {
                 HomeController homeController = loader.getController();
                 homeController.setUserInformation(username);
             }
 
+            // Set up the stage with the new scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 782, 649));
+            stage.setScene(new Scene(root, 782, 649)); // Adjust scene dimensions if needed
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,18 +63,25 @@ public class DBUtils {
         }
     }
 
+    /**
+     * Handles user sign-up by inserting a new user into the database.
+     *
+     * @param event    The event triggering the sign-up process.
+     * @param username The username entered by the user.
+     * @param password The password entered by the user.
+     */
     public static void signUpUser(ActionEvent event, String username, String password) {
         String checkQuery = "SELECT username FROM users WHERE username = ?";
         String insertQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
-        String selectQuery = "SELECT LAST_INSERT_ID()";  // To get the last inserted ID (the user_id)
+        String selectQuery = "SELECT LAST_INSERT_ID()"; // Retrieves the last inserted user_id
 
         try (Connection connection = getConnection();
              PreparedStatement psCheckUserExists = connection.prepareStatement(checkQuery);
              PreparedStatement psInsert = connection.prepareStatement(insertQuery);
-             PreparedStatement psSelect = connection.prepareStatement(selectQuery)){
+             PreparedStatement psSelect = connection.prepareStatement(selectQuery)) {
 
+            // Check if the username already exists
             psCheckUserExists.setString(1, username);
-
             try (ResultSet resultSet = psCheckUserExists.executeQuery()) {
                 if (resultSet.next()) {
                     showAlert("Signup Error", "Username already exists. Choose a different one.");
@@ -65,26 +89,34 @@ public class DBUtils {
                 }
             }
 
+            // Insert the new user into the database
             psInsert.setString(1, username);
             psInsert.setString(2, password);
             psInsert.executeUpdate();
 
-            // Get the newly inserted user_id
-            ResultSet rs = psSelect.executeQuery();
-            if (rs.next()) {
-                int userId = rs.getInt(1);  // Get the last inserted user_id
-                // Set the current user with the userId and username
-                CurrentUser.setUser(userId, username);
+            // Retrieve the newly inserted user_id
+            try (ResultSet rs = psSelect.executeQuery()) {
+                if (rs.next()) {
+                    int userId = rs.getInt(1);
+                    CurrentUser.setUser(userId, username); // Set the current user details
+                }
             }
 
+            // Navigate to the home scene
             changeScene(event, "Home.fxml", "Welcome!", username);
-
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Database Error", "Unable to sign up. Please try again later.");
         }
     }
 
+    /**
+     * Handles user login by validating credentials and redirecting to the home scene.
+     *
+     * @param event    The event triggering the login process.
+     * @param username The username entered by the user.
+     * @param password The password entered by the user.
+     */
     public static void logInUser(ActionEvent event, String username, String password) {
         String query = "SELECT user_id, password FROM users WHERE username = ?";
 
@@ -102,17 +134,10 @@ public class DBUtils {
                 int userId = resultSet.getInt("user_id");
                 String retrievedPassword = resultSet.getString("password");
 
+                // Validate the password
                 if (retrievedPassword.equals(password)) {
-                    User user = new User(userId, username, password);
-                    user.setPreferences(getUserPreferences(userId));
-                    user.setReadingHistory(getUserReadingHistory(userId));
-                    // After validating the user credentials in the database:
-
-                    CurrentUser.setUser(userId, username);
-
-// Redirect to the home page after successful login
-
-                    changeScene(event, "Home.fxml", "Welcome!", username);
+                    CurrentUser.setUser(userId, username); // Set the current user details
+                    changeScene(event, "Home.fxml", "Welcome!", username); // Redirect to home scene
                 } else {
                     showAlert("Login Error", "Incorrect password. Please try again.");
                 }
@@ -123,6 +148,12 @@ public class DBUtils {
         }
     }
 
+    /**
+     * Retrieves a user's preferences from the database.
+     *
+     * @param userId The ID of the user.
+     * @return A list of preferences for the user.
+     */
     public static List<String> getUserPreferences(int userId) {
         List<String> preferences = new ArrayList<>();
         String query = "SELECT preference FROM preferences WHERE user_id = ?";
@@ -144,6 +175,12 @@ public class DBUtils {
         return preferences;
     }
 
+    /**
+     * Retrieves a user's reading history from the database.
+     *
+     * @param userId The ID of the user.
+     * @return A list of article IDs representing the user's reading history.
+     */
     public static List<String> getUserReadingHistory(int userId) {
         List<String> readingHistory = new ArrayList<>();
         String query = "SELECT article_Id FROM reading_history WHERE reading_history_user_id = ?";
@@ -165,42 +202,12 @@ public class DBUtils {
         return readingHistory;
     }
 
-//    public static void saveUserPreferences(int userId, List<String> preferences) {
-//        String query = "INSERT INTO preferences (user_id, preference) VALUES (?, ?)";
-//
-//        try (Connection connection = getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            for (String preference : preferences) {
-//                preparedStatement.setInt(1, userId);
-//                preparedStatement.setString(2, preference);
-//                preparedStatement.addBatch();
-//            }
-//
-//            preparedStatement.executeBatch();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public static void saveUserReadingHistory(int userId, List<String> readingHistory) {
-//        String query = "INSERT INTO reading_history (reading_history_user_id, article_id) VALUES (?, ?)";
-//
-//        try (Connection connection = getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            for (String articleId : readingHistory) {
-//                preparedStatement.setInt(1, userId);
-//                preparedStatement.setInt(2, Integer.parseInt(articleId));
-//                preparedStatement.addBatch();
-//            }
-//
-//            preparedStatement.executeBatch();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
+    /**
+     * Displays an alert to the user.
+     *
+     * @param title   The title of the alert.
+     * @param message The content of the alert.
+     */
     private static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -208,4 +215,3 @@ public class DBUtils {
         alert.showAndWait();
     }
 }
-

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -13,10 +14,14 @@
       <VBox.margin>
          <Insets left="240.0" />
       </VBox.margin></Text>
-
-   <!-- Article List Container -->
-   <VBox fx:id="recommendationsContainer" spacing="15" style="-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: lightgray; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+   <ScrollPane hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+      <content>
+      
+         <!-- Article List Container -->
+         <VBox fx:id="recommendationsContainer" maxWidth="730.0" spacing="15" style="-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: lightgray; -fx-border-radius: 5;">
    </VBox>
+      </content>
+   </ScrollPane>
 
    <!-- Back Button -->
    <HBox alignment="CENTER" spacing="10">
