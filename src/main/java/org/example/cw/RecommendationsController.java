@@ -21,21 +21,8 @@ public class RecommendationsController {
     // Initialize the controller
     public void initialize() {
         button_back_to_home.setOnAction(event -> closeWindow());
-//        displayRecommendations(); // Trigger recommendations when the view loads
     }
 
-    // Fetch and display recommended articles
-//    public void displayRecommendations() {
-//        List<News> recommendedArticles = getRecommendedArticles(CurrentUser.getId());
-//        System.out.println("Recommended articles: " + recommendedArticles.size());
-//        if (recommendedArticles == null || recommendedArticles.isEmpty()) {
-//            addPlaceholderMessage("No recommendations available.");
-//            return;
-//        }
-//        for (News article : recommendedArticles) {
-//            addArticleToView(article);
-//        }
-//    }
 
     public void displayRecommendations() {
 
