@@ -66,9 +66,3 @@ The system consists of the following main components:
 - Java Development Kit (JDK) 11 or higher
 - MySQL or any SQL-based database
 - JavaFX 17 (or compatible version)
-
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/news-recommendation-system.git
-   cd news-recommendation-system
